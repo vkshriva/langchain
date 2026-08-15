@@ -1,0 +1,11 @@
+
+.env
+.env.*
+**/.env
+**/.env.*
+
+# Local env files
+.env
+.env.*
+**/.env
+**/.env.*

@@ -1,0 +1,16 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/app
+    working_dir: /app
+    environment:
+      APP_TARGET: ex_3/main.py
+    command:
+      - /bin/sh
+      - -c
+      - exec python "$${APP_TARGET:-main.py}"
+    stdin_open: true
+    tty: true
