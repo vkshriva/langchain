@@ -7,7 +7,7 @@ services:
       - ./app:/app
     working_dir: /app
     environment:
-      APP_TARGET: ex_3/main.py
+      APP_TARGET: ${APP_TARGET:-travelplanner_5/main.py}
     command:
       - /bin/sh
       - -c
