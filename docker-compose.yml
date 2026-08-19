@@ -8,11 +8,17 @@ services:
     working_dir: /app
     environment:
       APP_TARGET: ${APP_TARGET:-travelplanner_5/main.py}
+      APP_MODE: ${APP_MODE:-streamlit}
     ports:
       - "8501:8501"
     command:
       - /bin/sh
       - -c
-      - exec streamlit run "$${APP_TARGET:-app/travelplanner_5/main.py}" --server.port 8501 --server.address 0.0.0.0
+      - >-
+        if [ "$${APP_MODE}" = "python" ]; then
+          exec python "$${APP_TARGET}";
+        else
+          exec streamlit run "$${APP_TARGET}" --server.port 8501 --server.address 0.0.0.0;
+        fi
     stdin_open: true
     tty: true

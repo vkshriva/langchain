@@ -6,10 +6,20 @@ How to build and start:
 docker compose up --build
 ```
 
+This starts the default Streamlit app, `travelplanner_5/main.py`, at http://localhost:8501.
+
+To run a plain Python example with `docker compose up`, set `APP_MODE=python` and provide the file path with `APP_TARGET`:
+
+```bash
+APP_MODE=python APP_TARGET=ex_6/main.py docker compose up --build --abort-on-container-exit
+```
+
+The container prints the example output and exits when the script finishes. Use `docker compose up` without `APP_MODE=python` for Streamlit apps.
+
 For the interactive chat app, run the container in attached mode so your keyboard input reaches the Python process:
 
 ```bash
-APP_TARGET=ex_2/main.py docker compose run --rm -it app
+APP_MODE=python APP_TARGET=ex_2/main.py docker compose run --rm -it app
 ```
 
 How to run after editing code without rebuilding:
@@ -21,10 +31,10 @@ docker compose up
 Run a specific Python file from a subfolder:
 
 ```bash
-APP_TARGET=services/foo/main.py docker compose up --build
+APP_MODE=python APP_TARGET=services/foo/main.py docker compose up --build --abort-on-container-exit
 ```
 
-You can also run a file from any nested folder inside `app/` by changing the path:
+For a Streamlit file in any nested folder inside `app/`, change the path and leave the default mode:
 
 ```bash
 APP_TARGET=tasks/bar/main.py docker compose up
