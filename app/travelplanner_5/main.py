@@ -20,7 +20,7 @@ st.title("Travel Guide")
 city = st.text_input("Enter the city you are visiting:")
 month = st.text_input("Enter the month you are visiting:")
 language = st.text_input("Enter the local language:")
-budget = st.text_selectbox("Select your budget:", ["Low", "Medium", "High"])
+budget = st.selectbox("Select your budget:", ["Low", "Medium", "High"])
 
 if city and month and language and budget:
     user_input = prompt.format(city=city, month=month, language=language, budget=budget)
