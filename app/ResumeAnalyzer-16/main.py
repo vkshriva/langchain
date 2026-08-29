@@ -1,18 +1,15 @@
 import streamlit as st
-
 from typing import TypedDict
-
 from langgraph.graph import StateGraph,START,END
-
 from langchain_openai import ChatOpenAI
-
-from langchain_core.messages import HumanMessage
 from dotenv import load_dotenv
-
 from pypdf import PdfReader
 from docx import Document
 
 load_dotenv()  # Load environment variables from .env file
+
+#Step 0: Streamlit Config (MUST be first)
+st.set_page_config(page_title="Resume Analyzer", layout="centered")
 
 #Step1 : State
 class State(TypedDict):
@@ -43,7 +40,7 @@ def analyze_resume(state: State):
     if(state["feedback"]):
         prompt+=f"\n Previous Feedback : {state['feedback']}. Please improve the analysis based on this feedback."
 
-    response = llm.invoke([HumanMessage(content=prompt)])
+    response = llm.invoke(prompt)
     return {"analysis": response.content, "count": state.get("count", 0) + 1}
     
 
@@ -81,8 +78,6 @@ graph = builder.compile()
 
 
 #Step 6: Streamlit UI
-st.title("Resume Analyzer")
-st.set_page_config(page_title="Resume Analyzer", layout="centered")
 st.title("Resume Analyzer")
 
 upload = st.file_uploader("Upload your resume (PDF or DOCX)", type=["pdf", "docx"], key="resume_file")
